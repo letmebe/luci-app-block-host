@@ -7,11 +7,6 @@ WORKDIR /workspace
 # 复制插件到 SDK
 COPY package/luci-app-block-host /workspace/package/luci-app-block-host/
 
-# 创建 feeds.conf.default（如果不存在）
-RUN if [ ! -f feeds.conf.default ]; then \
-        echo "src-git feeds https://github.com/openwrtfeeds/openwrtfeeds.git" > feeds.conf.default; \
-    fi
-
 # 更新 feeds 并安装依赖
 RUN ./scripts/feeds update -a && \
     ./scripts/feeds install -a

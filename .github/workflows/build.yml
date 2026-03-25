@@ -19,6 +19,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
+      - name: Setup feeds.conf.default
+        run: |
+          echo "src-git feeds https://github.com/openwrtfeeds/openwrtfeeds.git" > feeds.conf.default
+          
       - name: Build with OpenWrt SDK
         uses: openwrt/gh-action-sdk@v5
         with:

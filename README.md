@@ -26,7 +26,6 @@ luci-app-block-host/
 ├── build.sh              # 本地编译脚本（从 src 复制）
 ├── Dockerfile.build      # Docker 编译配置
 ├── .github/workflows/    # GitHub Actions CI/CD
-├── feeds.conf.default    # feeds 配置文件
 └── README.md
 ```
 
@@ -52,7 +51,6 @@ luci-app-block-host/
 2. 复制插件到 SDK：
    ```bash
    cp -r /path/to/luci-app-block-host/package/luci-app-block-host package/
-   cp /path/to/luci-app-block-host/feeds.conf.default .
    ```
 
 3. 配置并编译：
