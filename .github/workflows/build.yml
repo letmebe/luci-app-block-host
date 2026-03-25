@@ -19,20 +19,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Setup feeds.conf.default
-        run: |
-          echo "src-git feeds https://github.com/openwrtfeeds/openwrtfeeds.git" > feeds.conf.default
-          
-      - name: Build with OpenWrt SDK
+      - name: Setup OpenWrt SDK
         uses: openwrt/gh-action-sdk@v5
         with:
           version: ${{ env.OPENWRT_VERSION }}
           target: ${{ env.TARGET }}
           subtarget: ${{ env.SUBTARGET }}
-          feeds: 1
-        env:
-          FEEDNAME: luci-app-block-host
-          V: s
+          
+      - name: Setup feeds.conf.default
+        run: |
+          echo "src-git feeds https://github.com/openwrtfeeds/openwrtfeeds.git" > feeds.conf.default
+          
+      - name: Update feeds
+        run: |
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          
+      - name: Build package
+        run: |
+          echo "CONFIG_PACKAGE_luci-app-block-host=y" >> .config
+          make defconfig
+          make package/luci-app-block-host/compile V=s
           
       - name: Upload artifact
         uses: actions/upload-artifact@v4
