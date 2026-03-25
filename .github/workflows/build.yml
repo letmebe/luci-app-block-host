@@ -1,0 +1,38 @@
+name: Build LuCI App
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+env:
+  OPENWRT_VERSION: 23.05
+  TARGET: x86
+  SUBTARGET: 64
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Build with OpenWrt SDK
+        uses: openwrt/gh-action-sdk@v5
+        env:
+          FEEDNAME: luci-app-block-host
+          V: s
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: luci-app-block-host-ipk
+          path: bin/packages/${{ env.TARGET }}/${{ env.SUBTARGET }}/luci-app-block-host*.ipk
+          
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: bin/packages/${{ env.TARGET }}/${{ env.SUBTARGET }}/luci-app-block-host*.ipk

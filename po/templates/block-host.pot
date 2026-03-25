@@ -1,0 +1,26 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8\n"
+
+#: htdocs/luci-static/resources/view/block-host/overview.js:10
+msgid "Host Blocker"
+msgstr ""
+
+#: htdocs/luci-static/resources/view/block-host/overview.js:11
+msgid "Block specified hosts by hostname using nftables. Devices will be blocked from accessing the network."
+msgstr ""
+
+#: htdocs/luci-static/resources/view/block-host/overview.js:15
+msgid "Settings"
+msgstr ""
+
+#: htdocs/luci-static/resources/view/block-host/overview.js:17
+msgid "Enable"
+msgstr ""
+
+#: htdocs/luci-static/resources/view/block-host/overview.js:21
+msgid "Target Hostnames"
+msgstr ""
+
+#: htdocs/luci-static/resources/view/block-host/overview.js:22
+msgid "Enter hostnames to block, separated by spaces. Do not use commas."
+msgstr ""
