@@ -21,6 +21,11 @@ jobs:
         
       - name: Build with OpenWrt SDK
         uses: openwrt/gh-action-sdk@v5
+        with:
+          version: ${{ env.OPENWRT_VERSION }}
+          target: ${{ env.TARGET }}
+          subtarget: ${{ env.SUBTARGET }}
+          feeds: 1
         env:
           FEEDNAME: luci-app-block-host
           V: s

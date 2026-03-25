@@ -2,19 +2,24 @@ FROM openwrt/sdk:23.05-x86-64
 
 USER root
 
+WORKDIR /workspace
+
 # 复制插件到 SDK
 COPY package/luci-app-block-host /workspace/package/luci-app-block-host/
 
-WORKDIR /workspace
+# 创建 feeds.conf.default（如果不存在）
+RUN if [ ! -f feeds.conf.default ]; then \
+        echo "src-git feeds https://github.com/openwrtfeeds/openwrtfeeds.git" > feeds.conf.default; \
+    fi
 
 # 更新 feeds 并安装依赖
-./scripts/feeds update -a
-./scripts/feeds install -a
+RUN ./scripts/feeds update -a && \
+    ./scripts/feeds install -a
 
 # 配置并编译
-echo "CONFIG_PACKAGE_luci-app-block-host=y" >> .config
-make defconfig
-make package/luci-app-block-host/compile V=s
+RUN echo "CONFIG_PACKAGE_luci-app-block-host=y" >> .config && \
+    make defconfig && \
+    make package/luci-app-block-host/compile V=s
 
 # 输出结果
 CMD ["ls", "-la", "bin/packages/x86_64/"]

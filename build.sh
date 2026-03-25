@@ -20,6 +20,17 @@ fi
 
 cd "$SDK_PATH"
 
+# 创建 feeds.conf.default（如果不存在）
+if [ ! -f feeds.conf.default ]; then
+    echo "创建 feeds.conf.default..."
+    echo "src-git feeds https://github.com/openwrtfeeds/openwrtfeeds.git" > feeds.conf.default
+fi
+
+# 更新 feeds
+echo "更新 feeds..."
+./scripts/feeds update -a
+./scripts/feeds install -a
+
 # 复制插件（从 src 复制到 package）
 echo "从 src 复制插件到 package 目录..."
 mkdir -p package/$PLUGIN_NAME
