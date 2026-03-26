@@ -8,7 +8,7 @@ on:
 
 # 全局环境变量，方便后续步骤引用
 env:
-  OPENWRT_VERSION: 23.05
+  OPENWRT_VERSION: 23.05.0
   TARGET: x86
   SUBTARGET: 64
   ARCH: x86_64
