@@ -28,7 +28,6 @@ jobs:
           CONTAINER: openwrt/sdk
           ARCH: x86-64-23.05.0
           FEEDNAME: luci-app-block-host
-          EXTRA_FEEDS: src-git|packages|https://git.openwrt.org/feed/packages.git src-git|luci|https://git.openwrt.org/project/luci.git
           V: s
 
 
