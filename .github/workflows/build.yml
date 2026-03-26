@@ -21,29 +21,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build with OpenWrt SDK
-        uses: openwrt/gh-action-sdk@v4
-        with:
-          version: ${{ env.OPENWRT_VERSION }}
-          target: ${{ env.TARGET }}
-          subtarget: ${{ env.SUBTARGET }}
-        env:
-          FEEDNAME: luci-app-block-host
-          V: s
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
 
-      - name: Show structures (Debug)
-        run: ls -R bin/
+      - name: Build with OpenWrt SDK
+        run: |
+          # 下载 OpenWrt SDK
+          wget https://downloads.openwrt.org/releases/${{ env.OPENWRT_VERSION }}/targets/${{ env.TARGET }}/${{ env.SUBTARGET }}/openwrt-sdk-${{ env.OPENWRT_VERSION }}-${{ env.TARGET }}-${{ env.SUBTARGET }}_gcc-12.3.0_musl.Linux-x86_64.tar.xz
+          tar -xf openwrt-sdk-*.tar.xz
+          
+          # 复制插件到 SDK
+          cp -r package/luci-app-block-host openwrt-sdk-*/package/
+          
+          # 进入 SDK 目录并编译
+          cd openwrt-sdk-*
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          make package/luci-app-block-host/compile V=s
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: luci-app-block-host-ipk
-          # 注意：23.05 版本的路径通常在 bin/packages/x86_64/ 下的某个子目录
-          path: bin/packages/x86_64/**/*.ipk
+          path: openwrt-sdk-*/bin/packages/**/*.ipk
 
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          # 自动发布所有生成的 ipk 文件
-          files: bin/packages/x86_64/**/*.ipk
+          files: openwrt-sdk-*/bin/packages/**/*.ipk
