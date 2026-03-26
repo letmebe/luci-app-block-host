@@ -26,6 +26,7 @@ jobs:
           ARCH: ${{ matrix.arch }}
           FEEDNAME: luci-app-block-host
           V: s
+          NO_DEFAULT_FEEDS: 1
 
       - name: Store packages
         uses: actions/upload-artifact@v4
