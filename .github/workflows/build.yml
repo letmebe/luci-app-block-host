@@ -21,18 +21,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Create feeds.conf
-        run: |
-          echo "src-link luci-app-block-host /feed/" > feeds.conf
-
       - name: Build with OpenWrt SDK
-        uses: openwrt/gh-action-sdk@v5
+        uses: openwrt/gh-action-sdk@v4
+        with:
+          version: ${{ env.OPENWRT_VERSION }}
+          target: ${{ env.TARGET }}
+          subtarget: ${{ env.SUBTARGET }}
         env:
-          # 修改这里：CONTAINER 只填镜像名，ARCH 填具体的标签（Tag）
-          CONTAINER: openwrt/sdk
-          ARCH: x86-64-23.05.0
           FEEDNAME: luci-app-block-host
-          NO_DEFAULT_FEEDS: 1
           V: s
 
       - name: Show structures (Debug)
