@@ -24,13 +24,13 @@ jobs:
       - name: Build with OpenWrt SDK
         uses: openwrt/gh-action-sdk@v5
         env:
-          # 直接指定容器镜像，防止 Action 自动推导错误导致拉取 mips 镜像
-          CONTAINER: openwrt/sdk:x86-64-23.05
-          ARCH: x86_64
+          # 修改这里：CONTAINER 只填镜像名，ARCH 填具体的标签（Tag）
+          CONTAINER: openwrt/sdk
+          ARCH: x86-64-23.05
           FEEDNAME: luci-app-block-host
-          # 额外的 feed 源
           EXTRA_FEEDS: src-git|feeds|https://github.com
           V: s
+
 
       - name: Show structures (Debug)
         run: ls -R bin/
