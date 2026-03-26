@@ -6,6 +6,7 @@ on:
       - 'v*'
   workflow_dispatch:
 
+# 全局环境变量，方便后续步骤引用
 env:
   OPENWRT_VERSION: 23.05
   TARGET: x86
@@ -19,22 +20,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Build with OpenWrt SDK
         uses: openwrt/gh-action-sdk@v5
         env:
+          # 直接指定容器镜像，防止 Action 自动推导错误导致拉取 mips 镜像
+          CONTAINER: openwrt/sdk:x86-64-23.05
+          ARCH: x86_64
           FEEDNAME: luci-app-block-host
-          EXTRA_FEEDS: src-git|feeds|https://github.com/openwrtfeeds/openwrtfeeds.git
+          # 额外的 feed 源
+          EXTRA_FEEDS: src-git|feeds|https://github.com
           V: s
-          
+
+      - name: Show structures (Debug)
+        run: ls -R bin/
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: luci-app-block-host-ipk
-          path: bin/packages/${{ env.TARGET }}/${{ env.SUBTARGET }}/luci-app-block-host*.ipk
-          
+          # 注意：23.05 版本的路径通常在 bin/packages/x86_64/ 下的某个子目录
+          path: bin/packages/x86_64/**/*.ipk
+
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: bin/packages/${{ env.TARGET }}/${{ env.SUBTARGET }}/luci-app-block-host*.ipk
+          # 自动发布所有生成的 ipk 文件
+          files: bin/packages/x86_64/**/*.ipk
