@@ -8,7 +8,7 @@ on:
 
 # 全局环境变量，方便后续步骤引用
 env:
-  OPENWRT_VERSION: 23.05.0
+  OPENWRT_VERSION: 23.05
   TARGET: x86
   SUBTARGET: 64
   ARCH: x86_64
@@ -26,7 +26,7 @@ jobs:
         env:
           # 修改这里：CONTAINER 只填镜像名，ARCH 填具体的标签（Tag）
           CONTAINER: openwrt/sdk
-          ARCH: x86-64-23.05
+          ARCH: x86-64-23.05.0
           FEEDNAME: luci-app-block-host
           EXTRA_FEEDS: src-git|feeds|https://github.com
           V: s
