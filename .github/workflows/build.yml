@@ -20,12 +20,11 @@ jobs:
         uses: openwrt/gh-action-sdk@main
         env:
           ARCH: x86_64
-          FEEDNAME: luci-app-block-host
+          PACKAGES: luci-app-block-host
           V: s
-          NO_DEFAULT_FEEDS: 1
 
       - name: Store packages
         uses: actions/upload-artifact@v4
         with:
           name: x86_64-packages
-          path: bin/packages/x86_64/packages/*.ipk
+          path: bin/packages/x86_64/**/*.ipk
