@@ -8,12 +8,8 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.arch }} build
+    name: x86_64 build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch:
-          - x86_64
 
     steps:
       - uses: actions/checkout@v4
@@ -23,13 +19,14 @@ jobs:
       - name: Build
         uses: openwrt/gh-action-sdk@main
         env:
-          ARCH: ${{ matrix.arch }}
+          ARCH: x86_64
           FEEDNAME: luci-app-block-host
+          EXTRA_FEEDS: src-link|luci-app-block-host|${{ github.workspace }}/package/luci-app-block-host
           V: s
           NO_DEFAULT_FEEDS: 1
 
       - name: Store packages
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.arch}}-packages
-          path: bin/packages/${{ matrix.arch }}/packages/*.ipk
+          name: x86_64-packages
+          path: bin/packages/x86_64/packages/*.ipk
