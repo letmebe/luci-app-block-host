@@ -25,4 +25,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: x86_64-packages
-          path: bin/packages/x86_64/**/*.ipk
+          path: bin/packages/x86_64/packages/*.ipk
