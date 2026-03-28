@@ -1,0 +1,28 @@
+name: Build IPK Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build IPK Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build IPK Package
+        run: |
+          chmod +x build-ipk.sh
+          ./build-ipk.sh
+
+      - name: Store IPK Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: luci-app-block-host-ipk
+          path: luci-app-block-host_*.ipk
