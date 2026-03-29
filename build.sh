@@ -6,7 +6,7 @@
 set -e
 
 SDK_PATH="${SDK_PATH:-$HOME/openwrt-sdk}"
-PLUGIN_NAME="luci-app-block-host"
+PLUGIN_NAME="luci-app-hostblocker"
 
 echo "=== 编译 $PLUGIN_NAME ==="
 

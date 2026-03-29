@@ -5,16 +5,16 @@ USER root
 WORKDIR /workspace
 
 # 复制插件到 SDK
-COPY package/luci-app-block-host /workspace/package/luci-app-block-host/
+COPY package/luci-app-hostblocker /workspace/package/luci-app-hostblocker/
 
 # 更新 feeds 并安装依赖
 RUN ./scripts/feeds update -a && \
     ./scripts/feeds install -a
 
 # 配置并编译
-RUN echo "CONFIG_PACKAGE_luci-app-block-host=y" >> .config && \
+RUN echo "CONFIG_PACKAGE_luci-app-hostblocker=y" >> .config && \
     make defconfig && \
-    make package/luci-app-block-host/compile V=s
+    make package/luci-app-hostblocker/compile V=s
 
 # 输出结果
 CMD ["ls", "-la", "bin/packages/x86_64/"]

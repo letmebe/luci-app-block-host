@@ -6,7 +6,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=luci-app-block-host
+PKG_NAME:=luci-app-hostblocker
 PKG_VERSION:=1.0.0
 PKG_RELEASE:=1
 
@@ -17,4 +17,4 @@ LUCI_DEPENDS:=+nftables +luci-base
 include $(TOPDIR)/feeds/luci/luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature
-$(eval $(call BuildPackage,luci-app-block-host))
+$(eval $(call BuildPackage,luci-app-hostblocker))

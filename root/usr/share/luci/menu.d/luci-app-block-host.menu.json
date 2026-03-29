@@ -7,7 +7,7 @@
         },
         "depends": {
             "acl": [
-                "luci-app-block-host"
+                "luci-app-hostblocker"
             ]
         }
     }

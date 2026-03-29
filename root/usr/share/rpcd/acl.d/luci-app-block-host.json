@@ -1,5 +1,5 @@
 {
-    "luci-app-block-host": {
+    "luci-app-hostblocker": {
         "description": "Grant access to block host configuration",
         "read": {
             "uci": [ "block_host" ]
