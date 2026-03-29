@@ -3,7 +3,7 @@
         "title": "Host Blocker",
         "action": {
             "type": "view",
-            "path": "block-host"
+            "path": "block-host/overview"
         },
         "depends": {
             "acl": [
